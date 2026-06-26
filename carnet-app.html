@@ -1,0 +1,665 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Carnet</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Carnet">
+<meta name="theme-color" content="#16181C">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAC6UlEQVR4nO3cPW5aQRhAUYiyAFeYgi5F2iwh8m6ySdbgNkUW4I4dkCZFHCkYI3jMXJ/T+Y8H31yNsBhYb7a74woiPt37DsA1CZoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSRE0KYIm5fOSF3t5evjvzx73h8XuB9c3ytquN9vdcYkLnXrAfxP2fEZa20Wecpz7gN/7u9zfaGt786AveRCinsOIa+ufQlIETYqgSRE0KYImRdCkCJoUQZOy6FmOaxnl3EBBbZbT7dBvvdL08vTglcYzFWc5VdCjnRuYWXWW0wQ94rmBWZVnOU3QcA5BkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkzLsu75//Xx+/Y0f369zO1xvlhfezi3ZoUkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTMuzx0S9fv736+tJPkP/3drjeLEf8VH87NCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCnTBP24PyzyNx9BeZbTBA3nmCro9+wSs+wo91Kd5VRBr1ZvD/dxf5hqAe6pOMth3/V9ymxDHlltltPt0HCKoEkRNCmCJkXQpAiaFEGTcvOgy+cGProR19YOTcoiQVfPDTDe2q43293x5lf549QHZAt5bqOs7aJBw615Dk2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGT8hv+NXLJU3nDkAAAAABJRU5ErkJggg==">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkNhcm5ldCIsICJzaG9ydF9uYW1lIjogIkNhcm5ldCIsICJzdGFydF91cmwiOiAiLiIsICJzY29wZSI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMxNjE4MUMiLCAidGhlbWVfY29sb3IiOiAiIzE2MTgxQyIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQWdBQUFBSUFDQVlBQUFEMGVOVDZBQUFLY2tsRVFWUjRuTzNhc1cxY1Z4QkFVY3RnQVl4RUJjb2NPSFVKQnJ0eGs2ekJxUU1Yd0l3ZHlKRU55S0tvM2VYLysyYi9QU2ZuY2haNE03Z2crT0hqcDg5ZmZnSUFVbjVlUFFBQWNIMENBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUYzcXdlNGRjK1A5eGYvN01QVHkyWnpBTndpTjNTZER4OC9mZjZ5ZW9oYjlKNUgreG9QR1NoeFE5Y1RBR2ZhK3RIK24wY01ISmtiT29mL0FUakQzZy8zV3I4RFlBVTNkQllCY0tKclBpb1BHRGdhTjNRZUFYQ0NGWS9KQXdhT3dnMmRTUUQ4d01wSDVBRUR0ODROblVzQXZHSEM0NWt3QThBbEp0eXZDVE5NSlFBQUlFZ0FmTWVrYXB3MEM4QXBKdDJ0U2JOTUlnQUFJRWdBdkdKaUxVNmNDZUExRSsvVnhKbFdFd0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUl1bHM5QUhNOFA5NWYvTE1QVHkrYnpRRzh6YTZ5QlFIQXU0N0phNS9od01BKzdDcGJFZ0JoV3h5VHR6N1hjWUZ0MkZYMjRIOEFvdlk2S05mK0hYQjBkcFc5Q0lDZ2F5Njd3d0tYczZ2c1NRREVyRmh5aHdYT1oxZlptd0FJV2JuY0RndWN6cTV5RFFJZ1lzSlNUNWdCcHB1d0p4Tm1ZSDhDQUFDQ0JFREFwSnFmTkF0TU0yay9KczNDUGdRQUFBUUpnSU9iV1BFVFo0TFZKdTdGeEpuWWpnQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFndTVXRDhEcC92N3J6L04vNkkvZnR4NWpFeGQ5RnppeUkrM3EwTy9DMS93RkFBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQkFBQUJBa0FBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFRFEzZW9CT04wdnYvNTI5czg4UDk1dlBzY1dMdmt1Y0dSSDJ0V3AzNFd2K1FzQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBQUVDUUFBQ0JJQUFCQWtBQUFnQ0FCQUFCQkFnQUFnZ1FBQUFRSkFBQUlFZ0FBRUNRQUFDQklBQUJBa0FBQWdDQUJBQUJCQWdBQWdnUUFBQVFKQUFBSUVnQUFFQ1FBQUNCSUFBQkFrQUFBZ0NBQkFBQkJBZ0FBZ2dRQUFBUUpBQUFJRWdBSDkvRDBzbnFFYjB5Y0NWYWJ1QmNUWjJJN0FnQUFnZ1FBQUFRSmdJQkpmOGFiTkF0TU0yay9KczNDUGdRQUFBUUpnSWdKTlQ5aEJwaHV3cDVNbUlIOUNZQ1FsVXZ0b01EcDdDclhJQUJpVml5M2d3TG5zNnZzVFFBRVhYUEpIUlM0bkYxbFR3SWc2aHJMN3FEQSs5bFY5bkszZWdEVytYZnBueC92ZC9sY1lCdDJsVDBJQURZNUxnNEo3TSt1c2lVQndIOGNCcmdOZHBVdCtCOEFBQWdTQUFBUUpBQUFJRWdBQUVDUUFBQ0FJQUVBQUVFQ0FBQ0NCQUFBQkFrQUFBZ1NBQUFRSkFBQUlFZ0FBRUNRQUFDQUlBRUFBRUVDQUFDQ0JBQUFCQWtBQUFnU0FBQVFKQUFBSUVnQUFFQ1FBQUNBSUFFQUFFRUNBQUNDQk1BckhwNWVWby93allrekFieG00cjJhT05OcUFnQUFnZ1FBQUFRSmdPK1k5T2VpU2JNQW5HTFMzWm8weXlRQ0FBQ0NCTUFiSmxUamhCa0FMakhoZmsyWVlTb0I4QU1ySDQrSEM5dzZOM1F1QVhDQ0ZZL0l3d1dPd2cyZFNRQ2M2SnFQeWNNRmpzWU5uVWNBbk9FYWo4ckRCWTdLRFozbHc4ZFBuNytzSHVJV1BUL2ViL3A1SGkxUTRvYXVKd0RlNlQyUDJJTUY2dHpRZFFRQUFBVDVId0FBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFQ1FBQUNCSUFBQkFrQUFBZ1NBQUFRSkFBQUlBZ0FRQUFRUUlBQUlJRUFBQUVDUUFBQ0JJQUFCQWtBQUFnU0FBQVFKQUFBSUFnQVFBQVFRSUFBSUlFQUFBRUNRQUFDQklBQUJBa0FBQWdTQUFBUUpBQUFJQWdBUUFBUVFJQUFJSUVBQUFFL1FNVEFBNElwSWMrcEFBQUFBQkpSVTVFcmtKZ2dnPT0iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3BuZyIsICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSJ9XX0=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16181C; --surface:#1F2228; --surface2:#282C34;
+    --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+    --ink:#F3F1EC; --muted:#9AA0AB; --faint:#6A707B;
+    --effort:#FF5A2C; --gain:#34D399; --warn:#FFC93C;
+    --fd:'Archivo',system-ui,sans-serif;
+    --fb:'Hanken Grotesk',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--fb)}
+  body{
+    background-image:linear-gradient(var(--line) 1px,transparent 1px);
+    background-size:100% 38px; background-position:0 -1px;
+    min-height:100dvh; padding:0 0 env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:18px 16px 64px}
+  .num{font-family:var(--fd);font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  button{font-family:var(--fb);cursor:pointer;border:none;background:none;color:inherit}
+  input{font-family:var(--fd)}
+
+  /* header */
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+  .brand{font-family:var(--fd);font-weight:900;font-stretch:125%;letter-spacing:.22em;font-size:15px}
+  .brand b{color:var(--effort)}
+  .ic{width:40px;height:40px;border:1px solid var(--line2);border-radius:11px;display:grid;place-items:center;color:var(--muted);font-size:18px}
+  .ic:active{background:var(--surface2)}
+
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+  .eyebrow .dot{color:var(--effort)}
+
+  h1{font-family:var(--fd);font-weight:900;font-stretch:115%;font-size:clamp(30px,9vw,42px);line-height:.96;margin:0 0 18px;letter-spacing:-.01em}
+  h1 .small{display:block;font-size:.42em;font-weight:800;font-stretch:110%;color:var(--muted);letter-spacing:.04em;margin-top:8px}
+
+  /* big cta */
+  .cta{width:100%;background:var(--effort);color:#1a0a02;font-family:var(--fd);font-weight:900;font-stretch:110%;
+    font-size:19px;letter-spacing:.08em;padding:19px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:10px}
+  .cta:active{transform:translateY(1px);filter:brightness(1.05)}
+  .cta.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line2)}
+
+  .toggle{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px;margin:0 0 14px}
+  .toggle .lbl{flex:1}
+  .toggle .t{font-weight:600}
+  .toggle .s{font-size:12.5px;color:var(--muted)}
+  .sw{width:50px;height:29px;border-radius:99px;background:var(--surface2);border:1px solid var(--line2);position:relative;transition:.18s;flex:none}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:23px;height:23px;border-radius:50%;background:var(--muted);transition:.18s}
+  .sw.on{background:var(--effort);border-color:var(--effort)}
+  .sw.on::after{left:23px;background:#1a0a02}
+
+  .pickrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+  .pick{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 6px;text-align:center}
+  .pick:active{background:var(--surface2)}
+  .pick .d{font-family:var(--fd);font-weight:900;font-size:17px;letter-spacing:.04em}
+  .pick .m{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.2}
+  .pick.today{border-color:var(--effort)}
+  .pick.today .d{color:var(--effort)}
+
+  .sep{display:flex;align-items:center;gap:12px;color:var(--faint);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin:24px 0 6px;font-weight:600}
+  .sep::before,.sep::after{content:"";height:1px;background:var(--line);flex:1}
+
+  /* victory strip */
+  .vic{margin-top:18px;border:1px solid var(--line);border-left:3px solid var(--gain);border-radius:12px;background:var(--surface);padding:14px 16px;display:flex;gap:13px;align-items:center}
+  .vic .big{font-family:var(--fd);font-weight:900;font-size:26px;color:var(--gain);font-stretch:110%}
+  .vic .t{font-weight:700;font-size:14.5px}
+  .vic .s{font-size:12.5px;color:var(--muted)}
+  .vic.warn{border-left-color:var(--warn)} .vic.warn .big{color:var(--warn)}
+
+  /* session */
+  .back{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:13.5px;font-weight:600;margin-bottom:14px}
+  .back:active{color:var(--ink)}
+
+  .ex{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+  .ex .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .ex h3{font-family:var(--fd);font-weight:900;font-stretch:108%;font-size:19px;margin:0;letter-spacing:.01em}
+  .ex .tag{font-size:11.5px;color:var(--muted);font-weight:600;white-space:nowrap}
+  .last{margin:11px 0 4px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .last b{color:var(--ink);font-weight:700}
+  .last .none{color:var(--faint)}
+  .uphint{margin:10px 0 2px;font-size:12.5px;color:var(--warn);background:rgba(255,201,60,.09);border:1px solid rgba(255,201,60,.25);border-radius:9px;padding:9px 11px;font-weight:600;line-height:1.3}
+
+  .wt{display:flex;align-items:center;gap:10px;margin:14px 0 12px}
+  .wt label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+  .wt input{width:96px;background:var(--surface2);border:1px solid var(--line2);border-radius:11px;color:var(--ink);font-size:19px;font-weight:800;padding:11px 12px;text-align:center}
+  .wt .unit{color:var(--muted);font-size:13px;margin-left:-4px}
+  .wt.bw{color:var(--faint);font-size:13px;font-style:italic}
+
+  .sets{display:flex;gap:8px;flex-wrap:wrap}
+  .setbox{flex:1;min-width:58px;position:relative}
+  .setbox .si{font-size:10px;color:var(--faint);text-align:center;margin-bottom:5px;letter-spacing:.08em;font-weight:600}
+  .setbox input{width:100%;background:var(--surface2);border:1px solid var(--line2);border-radius:11px;color:var(--ink);font-size:22px;font-weight:800;text-align:center;padding:12px 4px}
+  .setbox input:focus{outline:none;border-color:var(--effort)}
+  .setbox input.beat{border-color:var(--gain)}
+  .setbox input.max{border-color:var(--warn)}
+
+  .tot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:13px;border-top:1px dashed var(--line2)}
+  .tot .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+  .tot .v{display:flex;align-items:baseline;gap:9px}
+  .tot .v .n{font-family:var(--fd);font-weight:900;font-size:30px;font-stretch:108%}
+  .tot .v .d{font-family:var(--fd);font-weight:900;font-size:15px;color:var(--faint)}
+  .tot .v .d.up{color:var(--gain)} .tot .v .d.down{color:var(--effort)}
+
+  .save{position:sticky;bottom:14px;margin-top:22px}
+
+  /* progress */
+  .pex{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px}
+  .pex .h{display:flex;justify-content:space-between;align-items:baseline}
+  .pex h3{font-family:var(--fd);font-weight:900;font-size:17px;margin:0}
+  .pex .rec{font-size:12px;color:var(--gain);font-weight:700}
+  .spark{display:flex;align-items:flex-end;gap:5px;height:46px;margin:14px 0 10px}
+  .spark .bar{flex:1;background:var(--surface2);border-radius:4px 4px 0 0;min-height:4px;position:relative}
+  .spark .bar.best{background:var(--gain)}
+  .rows{font-size:12.5px;color:var(--muted)}
+  .rows .r{display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid var(--line)}
+  .rows .r .dt{color:var(--faint)}
+  .rows .r b{color:var(--ink);font-weight:700;font-family:var(--fd)}
+
+  .empty{text-align:center;color:var(--faint);padding:50px 20px;font-size:14px;line-height:1.6}
+
+  /* toast */
+  .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);background:var(--gain);color:#04130c;
+    font-family:var(--fd);font-weight:900;font-stretch:106%;padding:15px 24px;border-radius:13px;font-size:16px;letter-spacing:.04em;
+    box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .34s cubic-bezier(.2,.9,.3,1.2);z-index:50;text-align:center;max-width:90vw}
+  .toast.show{transform:translate(-50%,0)}
+  .toast.warn{background:var(--warn);color:#241c00}
+
+  .backup{display:flex;gap:10px;margin-top:28px}
+  .backup button{flex:1;background:var(--surface);border:1px solid var(--line2);border-radius:11px;padding:13px;font-weight:600;font-size:13px;color:var(--ink)}
+  .backup button:active{background:var(--surface2)}
+  .tip{margin-top:12px;font-size:11.5px;color:var(--faint);line-height:1.5;text-align:center}
+  .danger{margin-top:20px;text-align:center}
+  .danger button{color:var(--faint);font-size:12px;text-decoration:underline;letter-spacing:.02em}
+  .loading{text-align:center;color:var(--muted);padding:80px 0;font-family:var(--fd);font-weight:800;letter-spacing:.1em}
+  .syncBadge{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--faint);white-space:nowrap}
+  .syncBadge.ok{color:var(--gain)} .syncBadge.busy{color:var(--warn)} .syncBadge.err{color:var(--effort)}
+  .syncIntro{font-size:13.5px;color:var(--muted);line-height:1.55;margin:0 0 16px}
+  .syncStat{font-size:13px;font-weight:600;padding:11px 13px;border-radius:11px;background:var(--surface);border:1px solid var(--line);margin-bottom:18px;line-height:1.4}
+  .syncStat.ok{border-color:rgba(52,211,153,.4);color:var(--gain)}
+  .syncStat.err,.syncStat.auth{border-color:rgba(255,90,44,.4);color:var(--effort)}
+  .form label{display:block;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin:0 0 6px}
+  .form input{width:100%;background:var(--surface2);border:1px solid var(--line2);border-radius:11px;color:var(--ink);font-family:var(--fb);font-size:15px;font-weight:500;padding:12px 13px;margin-bottom:14px}
+  .form input:focus{outline:none;border-color:var(--effort)}
+  .form .two{display:flex;gap:12px} .form .two>div{flex:1}
+  .form .cta{margin-top:4px;margin-bottom:10px}
+  .linkbtn{display:block;margin:6px auto 0;color:var(--faint);font-size:12px;text-decoration:underline}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<div class="wrap" id="app"><div class="loading">CHARGEMENT…</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORE_KEY = 'carnet-v1';
+
+const PROGRAM = {
+  push:{ label:'Pecs · Triceps · Épaules', short:'Push', ex:[
+    {id:'floor_press',  name:'Floor Press',         sets:4, min:8,  max:12, w:true},
+    {id:'pompes',       name:'Pompes',              sets:3, w:false, note:'proche échec'},
+    {id:'elevations',   name:'Élévations latérales',sets:3, min:12, max:20, w:true},
+    {id:'ext_triceps',  name:'Extension triceps',   sets:3, min:10, max:15, w:true},
+  ]},
+  push_gym:{ label:'Pecs · Triceps · Épaules', short:'Push (salle)', ex:[
+    {id:'developpe_couche', name:'Développé couché',     sets:4, min:8,  max:12, w:true},
+    {id:'pompes',           name:'Pompes ou Dips',       sets:3, w:false, note:'proche échec'},
+    {id:'elevations',       name:'Élévations latérales', sets:3, min:12, max:20, w:true},
+    {id:'ext_triceps',      name:'Extension triceps',    sets:3, min:10, max:15, w:true},
+  ]},
+  pull:{ label:'Dos · Biceps', short:'Pull', ex:[
+    {id:'curl_barre',    name:'Curl barre',             sets:4, min:8,  max:12, w:true},
+    {id:'curl_halteres', name:'Curl haltères',          sets:3, min:10, max:15, w:true},
+    {id:'rowing',        name:'Rowing',                 sets:4, min:8,  max:15, w:true},
+    {id:'tractions_aus', name:'Tractions australiennes',sets:3, w:false, note:'proche échec'},
+  ]},
+};
+
+// day of week -> recommended session
+const DAYMAP = {1:'push',2:'pull',4:'push_gym_choice',5:'pull'};
+const DAYNAMES = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+let DATA = {sessions:[]};
+let SB = null;                 // supabase client
+let SBUSER = null;             // logged-in user
+let syncState = 'off';         // off | login | ok | err | busy
+
+/* ---------- storage: local mirror + optional Supabase source of truth ---------- */
+const HAS_CLAUDE = (typeof window!=='undefined' && window.storage && typeof window.storage.get==='function');
+const SB_KEY = 'carnet-sb';    // {url, anon}
+
+function mirrorLocal(){
+  const s=JSON.stringify(DATA);
+  try{ localStorage.setItem(STORE_KEY,s); }catch(_){}
+  if(HAS_CLAUDE){ try{ window.storage.set(STORE_KEY,s); }catch(_){} }
+}
+function getSbCfg(){ try{ const r=localStorage.getItem(SB_KEY); return r?JSON.parse(r):null; }catch(_){ return null; } }
+function setSbCfg(c){ try{ c?localStorage.setItem(SB_KEY,JSON.stringify(c)):localStorage.removeItem(SB_KEY); }catch(_){} }
+
+// wait for the supabase-js library (loaded from CDN) to be ready
+function sbLibReady(ms=4000){
+  return new Promise(res=>{
+    const t0=Date.now();
+    (function poll(){
+      if(window.supabase && window.supabase.createClient) return res(true);
+      if(Date.now()-t0>ms) return res(false);
+      setTimeout(poll,120);
+    })();
+  });
+}
+async function initSB(){
+  const cfg=getSbCfg();
+  if(!cfg) { SB=null; SBUSER=null; syncState='off'; return; }
+  const ok=await sbLibReady();
+  if(!ok){ syncState='err'; return; }      // library blocked (e.g. inside chat preview)
+  SB = window.supabase.createClient(cfg.url, cfg.anon);
+  const { data } = await SB.auth.getSession();
+  SBUSER = data && data.session ? data.session.user : null;
+  syncState = SBUSER ? 'ok' : 'login';
+}
+async function sbLoad(){
+  const { data, error } = await SB.from('carnet').select('data').eq('user_id', SBUSER.id).maybeSingle();
+  if(error) throw error;
+  return data ? data.data : null;
+}
+async function sbSave(){
+  const { error } = await SB.from('carnet')
+    .upsert({ user_id:SBUSER.id, data:DATA, updated_at:new Date().toISOString() }, { onConflict:'user_id' });
+  if(error) throw error;
+}
+
+async function load(){
+  // 1) instant local copy (or Claude storage in preview)
+  try{ const raw=localStorage.getItem(STORE_KEY); if(raw) DATA=JSON.parse(raw); }catch(_){}
+  if(HAS_CLAUDE){ try{ const r=await window.storage.get(STORE_KEY); if(r&&r.value) DATA=JSON.parse(r.value); }catch(_){} }
+  if(!DATA.sessions) DATA.sessions=[];
+  // 2) Supabase is source of truth when logged in
+  try{
+    await initSB();
+    if(SB && SBUSER){
+      syncState='busy';
+      const remote = await sbLoad();
+      if(remote){ DATA = remote; if(!DATA.sessions)DATA.sessions=[]; mirrorLocal(); }
+      else { await sbSave(); }              // first time: seed the row with whatever we have
+      syncState='ok';
+    }
+  }catch(e){ syncState='err'; }
+}
+async function persist(){
+  mirrorLocal();                            // always keep an instant local copy
+  if(SB && SBUSER){
+    syncState='busy'; updateSyncBadge();
+    try{ await sbSave(); syncState='ok'; }
+    catch(e){ syncState='err'; toast('Sync KO — gardé en local','warn'); }
+    updateSyncBadge();
+  }
+}
+function updateSyncBadge(){
+  const el=document.getElementById('syncBadge'); if(!el) return;
+  const m={off:['',''],login:['● connexion requise','busy'],ok:['● synchronisé','ok'],
+           busy:['↻ synchro…','busy'],err:['⚠ hors-ligne','err']};
+  const [txt,cls]=m[syncState]||['',''];
+  el.textContent=txt; el.className='syncBadge '+cls;
+}
+function exportData(){
+  try{
+    const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const d=new Date().toISOString().slice(0,10);
+    a.href=url; a.download='carnet-sauvegarde-'+d+'.json'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    toast('Sauvegarde exportée ✓');
+  }catch(e){ toast('Export impossible ici','warn'); }
+}
+function importData(file){
+  const rd=new FileReader();
+  rd.onload=async()=>{
+    try{ const d=JSON.parse(rd.result); if(!d||!Array.isArray(d.sessions)) throw 0;
+      DATA=d; await persist(); renderHome(); toast('Sauvegarde restaurée ✓');
+    }catch(e){ toast('Fichier invalide','warn'); }
+  };
+  rd.readAsText(file);
+}
+
+/* ---------- helpers ---------- */
+function lastPerf(exId){
+  for(const s of DATA.sessions){
+    const e = s.exercises.find(x=>x.id===exId && x.total>0);
+    if(e) return {...e, date:s.date};
+  }
+  return null;
+}
+function readyToProgress(ex, perf){
+  if(!ex.w || !perf || ex.max==null) return false;
+  return perf.reps.length>=ex.sets && perf.reps.every(r=>r>=ex.max);
+}
+function fmtDate(iso){
+  const d=new Date(iso), t=new Date();
+  const days=Math.round((t.setHours(0,0,0,0)-new Date(iso).setHours(0,0,0,0))/864e5);
+  if(days===0)return"aujourd'hui"; if(days===1)return'hier'; if(days<7)return'il y a '+days+' j';
+  return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+}
+function toast(msg,kind){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(kind==='warn'?' warn':'');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='toast',2600);
+}
+
+/* ---------- HOME ---------- */
+function renderHome(){
+  const dow=new Date().getDay();
+  const rec=DAYMAP[dow];
+  const isThu = dow===4;
+  const recType = rec==='push_gym_choice' ? 'push' : (rec||null);
+  let gymOn=false;
+
+  // latest victory across sessions
+  let victory=null;
+  if(DATA.sessions.length){
+    const last=DATA.sessions[0];
+    for(const e of last.exercises){
+      const prev=DATA.sessions.slice(1).find(s=>s.exercises.some(x=>x.id===e.id&&x.total>0));
+      const pe=prev&&prev.exercises.find(x=>x.id===e.id);
+      if(pe){
+        const diff=e.total-pe.total;
+        if(diff>0){victory={name:e.name,diff,kind:'gain'};break;}
+      }
+    }
+    if(!victory){
+      for(const e of last.exercises){
+        const def=findEx(e.id);
+        if(def&&def.w&&def.max!=null&&e.reps.every(r=>r>=def.max)){victory={name:e.name,kind:'warn'};break;}
+      }
+    }
+  }
+
+  const app=document.getElementById('app');
+  const recLabel = rec ? (isThu?'Jeudi':DAYNAMES[dow]) : DAYNAMES[dow];
+  const recBody = recType ? PROGRAM[recType].label : 'Jour de repos';
+
+  app.innerHTML = `
+    <header>
+      <div class="brand">CAR<b>NET</b></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span class="syncBadge" id="syncBadge"></span>
+        <div class="ic" id="goSync">⛭</div>
+        <div class="ic" id="goProg">▤</div>
+      </div>
+    </header>
+    <div class="eyebrow"><span class="dot">●</span> ${recLabel} · ${rec?"aujourd'hui":'repos'}</div>
+    <h1>${recBody}${rec?'':`<span class="small">choisis une séance si tu veux t'entraîner</span>`}</h1>
+    ${isThu?`<div class="toggle" id="gymT">
+        <div class="lbl"><div class="t">Salle du pote</div><div class="s">Développé couché à la place du Floor Press</div></div>
+        <div class="sw" id="gymSw"></div></div>`:''}
+    ${rec?`<button class="cta" id="startRec">▶ COMMENCER</button>`:''}
+    <div class="sep">${rec?'ou change de séance':'choisis ta séance'}</div>
+    <div class="pickrow">
+      ${pickBtn('push','Lun','Push',dow===1)}
+      ${pickBtn('pull','Mar','Pull',dow===2)}
+      ${pickBtn(isThu&&gymOn?'push_gym':'push','Jeu','Push',dow===4,'jeuBtn')}
+      ${pickBtn('pull','Ven','Pull',dow===5)}
+    </div>
+    ${victory?victoryCard(victory):''}
+    <div class="backup">
+      <button id="exp">⬇ Sauvegarder</button>
+      <button id="imp">⬆ Restaurer</button>
+      <input id="impf" type="file" accept="application/json,.json" hidden>
+    </div>
+    <div class="tip">Astuce : ouvre ce fichier dans ton navigateur et ajoute-le à ton écran d'accueil pour l'utiliser comme une vraie appli.</div>
+    <div class="danger"><button id="reset">effacer toutes mes données</button></div>
+  `;
+
+  document.getElementById('goProg').onclick=renderProgress;
+  document.getElementById('goSync').onclick=renderSync;
+  updateSyncBadge();
+  if(rec) document.getElementById('startRec').onclick=()=>{
+    let t=recType;
+    if(isThu&&gymOn) t='push_gym';
+    renderSession(t);
+  };
+  // picks
+  document.querySelectorAll('[data-type]').forEach(b=>b.onclick=()=>renderSession(b.dataset.type));
+  if(isThu){
+    const sw=document.getElementById('gymSw');
+    document.getElementById('gymT').onclick=()=>{
+      gymOn=!gymOn; sw.classList.toggle('on',gymOn);
+      // update Jeu pick + start target
+      const jeu=document.getElementById('jeuBtn'); if(jeu) jeu.dataset.type=gymOn?'push_gym':'push';
+    };
+  }
+  document.getElementById('exp').onclick=exportData;
+  document.getElementById('imp').onclick=()=>document.getElementById('impf').click();
+  document.getElementById('impf').onchange=e=>{ if(e.target.files[0]) importData(e.target.files[0]); };
+  document.getElementById('reset').onclick=async()=>{
+    if(confirm('Effacer définitivement tout ton historique ?')){
+      DATA={sessions:[]}; await persist(); renderHome(); toast('Historique effacé','warn');
+    }
+  };
+}
+function pickBtn(type,d,m,today,id){
+  return `<button class="pick${today?' today':''}" data-type="${type}" ${id?`id="${id}"`:''}>
+    <div class="d">${d}</div><div class="m">${m}</div></button>`;
+}
+function victoryCard(v){
+  if(v.kind==='gain')
+    return `<div class="vic"><div class="big">+${v.diff}</div><div><div class="t">${v.name} — victoire !</div><div class="s">${v.diff} rep${v.diff>1?'s':''} de plus que la fois d'avant.</div></div></div>`;
+  return `<div class="vic warn"><div class="big">↑</div><div><div class="t">${v.name} — objectif atteint</div><div class="s">Toutes les séries au max. Monte le poids à la prochaine.</div></div></div>`;
+}
+function findEx(id){
+  for(const k in PROGRAM){const e=PROGRAM[k].ex.find(x=>x.id===id);if(e)return e;}
+  return null;
+}
+
+/* ---------- SESSION ---------- */
+function renderSession(type){
+  const prog=PROGRAM[type];
+  const app=document.getElementById('app');
+  app.innerHTML=`
+    <div class="back" id="back">← retour</div>
+    <div class="eyebrow"><span class="dot">●</span> ${prog.short} · en cours</div>
+    <h1 style="margin-bottom:20px">${prog.label}</h1>
+    <div id="exList"></div>
+    <button class="cta save" id="saveBtn">✓ ENREGISTRER LA SÉANCE</button>
+  `;
+  const list=document.getElementById('exList');
+  prog.ex.forEach(ex=>list.insertAdjacentHTML('beforeend',exCard(ex)));
+  prog.ex.forEach(ex=>wireCard(ex));
+  document.getElementById('back').onclick=renderHome;
+  document.getElementById('saveBtn').onclick=()=>saveSession(type,prog);
+}
+function exCard(ex){
+  const perf=lastPerf(ex.id);
+  const tag = ex.w
+    ? `${ex.sets} séries · ${ex.min}–${ex.max} reps`
+    : `${ex.sets} séries · ${ex.note}`;
+  let lastHtml;
+  if(perf){
+    lastHtml=`<div class="last">Dernière (${fmtDate(perf.date)}) :
+      ${ex.w?`<b>${perf.weight} kg</b> ·`:''} <b>${perf.reps.join(' · ')}</b> = <b>${perf.total}</b></div>`;
+  }else{
+    lastHtml=`<div class="last"><span class="none">Pas encore d'historique — pose ta première référence.</span></div>`;
+  }
+  const up = readyToProgress(ex,perf)
+    ? `<div class="uphint">🎯 Tu as validé le max partout. Monte le poids et repars vers ${ex.min} reps.</div>`:'';
+
+  const wt = ex.w
+    ? `<div class="wt"><label>Poids</label><input id="w_${ex.id}" inputmode="decimal" type="number" step="0.5" value="${perf?perf.weight:''}" placeholder="${perf?perf.weight:'kg'}"><span class="unit">kg</span></div>`
+    : `<div class="wt bw">Poids du corps — vise plus de reps que la dernière fois.</div>`;
+
+  let boxes='';
+  for(let i=0;i<ex.sets;i++){
+    const ph=perf&&perf.reps[i]!=null?perf.reps[i]:'';
+    boxes+=`<div class="setbox"><div class="si">S${i+1}</div>
+      <input id="r_${ex.id}_${i}" inputmode="numeric" type="number" placeholder="${ph}" data-ex="${ex.id}" data-i="${i}"></div>`;
+  }
+  return `<div class="ex" data-ex="${ex.id}">
+    <div class="top"><h3>${ex.name}</h3><div class="tag">${tag}</div></div>
+    ${lastHtml}${up}${wt}
+    <div class="sets">${boxes}</div>
+    <div class="tot"><div class="l">Total reps</div>
+      <div class="v"><span class="n" id="tot_${ex.id}">0</span><span class="d" id="d_${ex.id}"></span></div></div>
+  </div>`;
+}
+function wireCard(ex){
+  const perf=lastPerf(ex.id);
+  const inputs=[...document.querySelectorAll(`[id^="r_${ex.id}_"]`)];
+  const totEl=document.getElementById('tot_'+ex.id);
+  const dEl=document.getElementById('d_'+ex.id);
+  function upd(){
+    let sum=0;
+    inputs.forEach((inp,i)=>{
+      const v=parseInt(inp.value)||0; sum+=v;
+      inp.classList.remove('beat','max');
+      if(ex.w&&ex.max!=null&&v>=ex.max) inp.classList.add('max');
+      else if(perf&&perf.reps[i]!=null&&v>=perf.reps[i]&&v>0) inp.classList.add('beat');
+    });
+    totEl.textContent=sum;
+    if(perf&&sum>0){
+      const diff=sum-perf.total;
+      dEl.textContent=(diff>0?'+'+diff:diff)+' vs dernière';
+      dEl.className='d '+(diff>0?'up':diff<0?'down':'');
+    }else{dEl.textContent='';dEl.className='d';}
+  }
+  inputs.forEach(i=>i.addEventListener('input',upd));
+  upd();
+}
+async function saveSession(type,prog){
+  const exData=[];
+  for(const ex of prog.ex){
+    const reps=[];
+    for(let i=0;i<ex.sets;i++){
+      const v=parseInt(document.getElementById(`r_${ex.id}_${i}`).value);
+      reps.push(isNaN(v)?0:v);
+    }
+    const total=reps.reduce((a,b)=>a+b,0);
+    if(total===0) continue; // skip untouched exercises
+    const weight = ex.w ? (parseFloat(document.getElementById('w_'+ex.id).value)||0) : 0;
+    exData.push({id:ex.id,name:ex.name,weight,reps,total});
+  }
+  if(!exData.length){ toast('Rien à enregistrer','warn'); return; }
+
+  // compute headline before saving
+  let head=null;
+  for(const e of exData){
+    const p=lastPerf(e.id);
+    if(p){const diff=e.total-p.total; if(diff>0){head={msg:`${e.name} +${diff} rep${diff>1?'s':''} · VICTOIRE`,kind:'gain'};break;}}
+  }
+  if(!head){
+    for(const e of exData){
+      const def=findEx(e.id);
+      if(def&&def.w&&def.max!=null&&e.reps.length>=def.sets&&e.reps.every(r=>r>=def.max)){
+        head={msg:`${e.name} : monte le poids !`,kind:'warn'};break;}
+    }
+  }
+
+  DATA.sessions.unshift({date:new Date().toISOString(),type,exercises:exData});
+  await persist();
+  renderHome();
+  if(head) toast(head.msg,head.kind); else toast('Séance enregistrée ✓');
+}
+
+/* ---------- PROGRESS ---------- */
+function renderProgress(){
+  const app=document.getElementById('app');
+  // gather every exercise that has data, newest first
+  const ids=[];
+  DATA.sessions.forEach(s=>s.exercises.forEach(e=>{if(!ids.includes(e.id))ids.push(e.id);}));
+  let body;
+  if(!ids.length){
+    body=`<div class="empty">Aucune séance enregistrée pour l'instant.<br>Lance ta première séance, et ta progression s'affichera ici.</div>`;
+  }else{
+    body=ids.map(id=>{
+      const def=findEx(id)||{name:id,w:true};
+      const hist=[];
+      DATA.sessions.forEach(s=>{const e=s.exercises.find(x=>x.id===id);if(e)hist.push({...e,date:s.date});});
+      const best=Math.max(...hist.map(h=>h.total));
+      const recent=hist.slice(0,10).reverse();
+      const max=Math.max(...recent.map(h=>h.total),1);
+      const bars=recent.map(h=>`<div class="bar${h.total===best?' best':''}" style="height:${Math.max(8,h.total/max*100)}%" title="${h.total}"></div>`).join('');
+      const rows=hist.slice(0,6).map(h=>`<div class="r"><span class="dt">${fmtDate(h.date)}</span>
+        <span>${def.w?h.weight+' kg · ':''}${h.reps.join('·')} = <b>${h.total}</b></span></div>`).join('');
+      return `<div class="pex"><div class="h"><h3>${def.name}</h3><span class="rec">record ${best}</span></div>
+        <div class="spark">${bars}</div><div class="rows">${rows}</div></div>`;
+    }).join('');
+  }
+  app.innerHTML=`<div class="back" id="back">← retour</div>
+    <div class="eyebrow"><span class="dot">●</span> Suivi</div>
+    <h1 style="margin-bottom:20px">Mes progrès</h1>${body}`;
+  document.getElementById('back').onclick=renderHome;
+}
+
+/* ---------- SYNC SETTINGS (Supabase) ---------- */
+function renderSync(){
+  const cfg=getSbCfg()||{url:'',anon:''};
+  const app=document.getElementById('app');
+
+  // STATE A — not configured: ask for project URL + anon key
+  if(!cfg.url || !cfg.anon){
+    app.innerHTML=`
+      <div class="back" id="back">← retour</div>
+      <div class="eyebrow"><span class="dot">●</span> Synchronisation</div>
+      <h1 style="margin-bottom:8px">Connexion au cloud</h1>
+      <p class="syncIntro">Une fois branché, tes séances sont stockées dans ta base Supabase (gratuite, privée) et te suivent sur tous tes appareils. Plus rien ne dépend du navigateur.</p>
+      <div class="form">
+        <label>URL du projet Supabase</label>
+        <input id="f_url" placeholder="https://xxxx.supabase.co" value="${cfg.url||''}">
+        <label>Clé « anon public »</label>
+        <input id="f_anon" placeholder="eyJhbGciOi…" value="${cfg.anon||''}">
+        <button class="cta" id="save">Continuer</button>
+      </div>
+      <div class="tip" style="text-align:left">Tu trouves ces deux valeurs dans Supabase → ton projet → Settings → API. La clé <b>anon</b> est faite pour être publique, c'est ton mot de passe qui protège tes données.</div>`;
+    document.getElementById('back').onclick=renderHome;
+    document.getElementById('save').onclick=async()=>{
+      const url=document.getElementById('f_url').value.trim().replace(/\/+$/,'');
+      const anon=document.getElementById('f_anon').value.trim();
+      if(!url||!anon){ toast('Remplis les deux champs','warn'); return; }
+      setSbCfg({url,anon}); await initSB(); renderSync();
+    };
+    return;
+  }
+
+  // STATE B — configured but not logged in: email + password
+  if(!SBUSER){
+    app.innerHTML=`
+      <div class="back" id="back">← retour</div>
+      <div class="eyebrow"><span class="dot">●</span> Synchronisation</div>
+      <h1 style="margin-bottom:8px">Connexion</h1>
+      <p class="syncIntro">Connecte-toi avec un email et un mot de passe. La première fois, crée ton compte ; ensuite tu te reconnectes pareil sur n'importe quel appareil.</p>
+      <div class="form">
+        <label>Email</label>
+        <input id="f_email" type="email" inputmode="email" placeholder="toi@email.com">
+        <label>Mot de passe</label>
+        <input id="f_pass" type="password" placeholder="6 caractères minimum">
+        <button class="cta" id="login">Se connecter</button>
+        <button class="cta ghost" id="signup">Créer mon compte</button>
+        <button class="linkbtn" id="forget">changer de projet Supabase</button>
+      </div>`;
+    document.getElementById('back').onclick=renderHome;
+    const getCreds=()=>({email:document.getElementById('f_email').value.trim(),
+                         password:document.getElementById('f_pass').value});
+    document.getElementById('login').onclick=()=>doAuth('login',getCreds());
+    document.getElementById('signup').onclick=()=>doAuth('signup',getCreds());
+    document.getElementById('forget').onclick=()=>{ setSbCfg(null); SB=null; SBUSER=null; syncState='off'; renderSync(); };
+    return;
+  }
+
+  // STATE C — logged in
+  app.innerHTML=`
+    <div class="back" id="back">← retour</div>
+    <div class="eyebrow"><span class="dot">●</span> Synchronisation</div>
+    <h1 style="margin-bottom:8px">Synchronisé ✅</h1>
+    <p class="syncIntro">Connecté en tant que <b>${SBUSER.email||'toi'}</b>. Chaque séance est enregistrée dans le cloud automatiquement. Ouvre l'appli avec ce compte sur ton autre tél, tout y sera.</p>
+    <div class="form">
+      <button class="cta ghost" id="logout">Se déconnecter</button>
+    </div>`;
+  document.getElementById('back').onclick=renderHome;
+  document.getElementById('logout').onclick=async()=>{
+    try{ await SB.auth.signOut(); }catch(_){}
+    SBUSER=null; syncState='login'; toast('Déconnecté'); renderSync();
+  };
+}
+
+async function doAuth(mode, creds){
+  if(!creds.email || !creds.password){ toast('Email + mot de passe requis','warn'); return; }
+  if(!SB){ await initSB(); }
+  if(!SB){ toast('Librairie indisponible ici (essaie la version en ligne)','warn'); return; }
+  syncState='busy'; updateSyncBadge();
+  try{
+    const fn = mode==='signup'
+      ? SB.auth.signUp({email:creds.email,password:creds.password})
+      : SB.auth.signInWithPassword({email:creds.email,password:creds.password});
+    const { data, error } = await fn;
+    if(error) throw error;
+    if(!data.session){ // email confirmation still on
+      toast('Compte créé — confirme via l\'email reçu, puis connecte-toi','warn'); syncState='login'; updateSyncBadge(); return;
+    }
+    SBUSER = data.session.user;
+    // merge: if cloud empty, push local; else cloud wins
+    const remote = await sbLoad();
+    if(remote && remote.sessions && remote.sessions.length){ DATA=remote; mirrorLocal(); }
+    else { await sbSave(); }
+    syncState='ok'; toast('Connecté ✓'); renderHome();
+  }catch(e){
+    syncState='login';
+    const msg=(e&&e.message)||'';
+    toast(/invalid login/i.test(msg)?'Identifiants incorrects':
+          /already registered/i.test(msg)?'Compte déjà existant — connecte-toi':
+          'Connexion impossible','warn');
+    updateSyncBadge();
+  }
+}
+
+/* ---------- boot ---------- */
+(async()=>{ await load(); renderHome(); })();
+</script>
