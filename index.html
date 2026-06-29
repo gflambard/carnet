@@ -205,6 +205,14 @@
   .pstat.ok{color:var(--gain);border-color:rgba(52,211,153,.4)}
   .pstat.warn{color:var(--warn);border-color:rgba(255,201,60,.4)}
   .pstat.down{color:var(--effort);border-color:rgba(255,90,44,.4)}
+  .pstatrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px}
+  .pgpct{font-family:var(--fd);font-weight:900;font-size:15px}
+  .pgpct.ok{color:var(--gain)} .pgpct.warn{color:var(--warn)} .pgpct.down{color:var(--effort)}
+  .pgbar{height:7px;background:var(--surface2);border-radius:99px;overflow:hidden;margin:9px 0 2px}
+  .pgfill{height:100%;border-radius:99px;background:var(--faint);transition:width .5s}
+  .pgfill.ok{background:var(--gain)} .pgfill.warn{background:var(--warn)} .pgfill.down{background:var(--effort)}
+  .pex.focus{border-left:3px solid var(--effort)}
+  .gfocus{font-size:13px;margin-top:9px;color:var(--ink)} .gfocus b{color:var(--effort)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -221,8 +229,8 @@ const STORE_KEY = 'carnet-v1';
    que l'email + mot de passe sur chaque appareil. La clé anon est
    publique par nature : aucun risque à la mettre ici.
    ======================================================================= */
-const SUPABASE_URL  = "https://acgeybyscjmlncnhdvpi.supabase.co";   // ex: "https://abcdxyz.supabase.co"
-const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjZ2V5YnlzY2ptbG5jbmhkdnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NTk4NDEsImV4cCI6MjA5ODAzNTg0MX0.zWH6EzqmDog9cHPLFn3kBfDW8sN4UfhRpj9WcJuWHD0";   // ex: "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+const SUPABASE_URL  = "";   // ex: "https://abcdxyz.supabase.co"
+const SUPABASE_ANON = "";   // ex: "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
 /* =======================================================================
    ▲▲▲  fin de la zone à remplir  ▲▲▲
    ======================================================================= */
@@ -723,10 +731,11 @@ function exStatus(def, hist){           // hist newest-first
   if(hist.length<2) return {label:'Référence posée', cls:'', score:0.5};
   const prev=hist[1];
   const vol=h=>(def.w?(h.weight||0):1)*h.total;
-  const dv=vol(last)-vol(prev);
-  if(dv>0) return {label:'En progression', cls:'ok', score:1};
-  if(dv<0) return {label:'En baisse — récup/forme ?', cls:'down', score:0};
-  return {label:'Plateau — ajoute 1 rep', cls:'warn', score:0.3};
+  const lv=vol(last), pv=vol(prev)||1;
+  const chg=(lv-pv)/pv;                  // relative change in volume
+  if(chg>0) return {label:'En progression', cls:'ok', score:Math.min(1, 0.6+chg*4)};
+  if(chg<0) return {label:'En baisse — récup/forme ?', cls:'down', score:Math.max(0, 0.3+chg*4)};
+  return {label:'Plateau — ajoute 1 rep', cls:'warn', score:0.35};
 }
 function renderProgress(){
   hideTimer();
@@ -743,7 +752,7 @@ function renderProgress(){
     return;
   }
 
-  let scoreSum=0, scoreN=0;
+  let scoreSum=0, scoreN=0; const focusList=[];
   const cards=ids.map(id=>{
     const def=findEx(id)||{name:id,w:true};
     const hist=[];
@@ -757,20 +766,28 @@ function renderProgress(){
       <span>${def.w?h.weight+' kg · ':''}${h.reps.join('·')} = <b>${h.total}</b></span></div>`).join('');
     const st=exStatus(def,hist);
     if(st){ scoreSum+=st.score; scoreN++; }
+    const pct=st?Math.round(st.score*100):0;
+    const focus = st && st.score<0.4 ? ' focus' : '';
+    if(focus) focusList.push(def.name);
     const badge=st?`<span class="pstat ${st.cls}">${st.label}</span>`:'';
-    return `<div class="pex"><div class="h"><h3>${def.name}</h3><span class="rec">record ${best}</span></div>
-      ${badge}<div class="spark">${bars}</div><div class="rows">${rows}</div></div>`;
+    const exGauge=st?`<div class="pstatrow">${badge}<span class="pgpct ${st.cls}">${pct}%</span></div>
+      <div class="pgbar"><div class="pgfill ${st.cls}" style="width:${pct}%"></div></div>`:badge;
+    return `<div class="pex${focus}"><div class="h"><h3>${def.name}</h3><span class="rec">record ${best}</span></div>
+      ${exGauge}<div class="spark">${bars}</div><div class="rows">${rows}</div></div>`;
   }).join('');
 
-  const pct = scoreN? Math.round(scoreSum/scoreN*100) : 0;
+  const gPct = scoreN? Math.round(scoreSum/scoreN*100) : 0;
   let gCls='warn', gMsg='Correct — tu peux pousser un peu plus.';
-  if(pct>=70){ gCls='ok'; gMsg='Tu progresses bien — continue comme ça.'; }
-  else if(pct<40){ gCls='down'; gMsg='Ça stagne — ajoute des reps ou du poids.'; }
+  if(gPct>=70){ gCls='ok'; gMsg='Tu progresses bien — continue comme ça.'; }
+  else if(gPct<40){ gCls='down'; gMsg='Ça stagne — ajoute des reps ou du poids.'; }
+  const focusLine = focusList.length
+    ? `<div class="gfocus">🎯 À concentrer : <b>${focusList.join(', ')}</b></div>` : '';
   const gauge=`<div class="gauge">
-    <div class="gtop"><span>Jauge de progression</span><span class="gpct ${gCls}">${pct}%</span></div>
-    <div class="gbar"><div class="gfill ${gCls}" style="width:${pct}%"></div></div>
+    <div class="gtop"><span>Jauge globale</span><span class="gpct ${gCls}">${gPct}%</span></div>
+    <div class="gbar"><div class="gfill ${gCls}" style="width:${gPct}%"></div></div>
     <div class="gmsg">${gMsg}</div>
-    <div class="ghint">Basé sur tes 2 dernières séances par exercice (volume = poids × reps). Plus tu ajoutes des reps ou du poids, plus la jauge monte. C'est un repère simple, pas une science exacte.</div>
+    ${focusLine}
+    <div class="ghint">Globale = moyenne de tes exercices. Chaque exo a sa propre jauge ci-dessous : les plus basses (et marquées d'un trait orange) sont celles où concentrer tes efforts. Calcul basé sur le volume (poids × reps) de tes 2 dernières séances. Repère simple, pas une science exacte.</div>
   </div>`;
 
   app.innerHTML=`<div class="back" id="back">← retour</div>
