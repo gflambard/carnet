@@ -213,6 +213,18 @@
   .pgfill.ok{background:var(--gain)} .pgfill.warn{background:var(--warn)} .pgfill.down{background:var(--effort)}
   .pex.focus{border-left:3px solid var(--effort)}
   .gfocus{font-size:13px;margin-top:9px;color:var(--ink)} .gfocus b{color:var(--effort)}
+
+  /* skip / reminder / suggestion */
+  .ex .top{align-items:center}
+  .skip{font-size:11.5px;font-weight:700;color:var(--muted);border:1px solid var(--line2);border-radius:99px;padding:6px 12px;white-space:nowrap;flex:none}
+  .skip:active{background:var(--surface2)}
+  .skip.on{background:var(--effort);color:#1a0a02;border-color:var(--effort)}
+  .tag2{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+  .ex.skipped{opacity:.62}
+  .exbody[hidden]{display:none}
+  .skipnote{margin-top:10px;font-size:12.5px;color:var(--effort);font-style:italic}
+  .reminder{margin:10px 0 2px;font-size:12.5px;color:var(--warn);background:rgba(255,201,60,.09);border:1px solid rgba(255,201,60,.28);border-radius:9px;padding:9px 11px;font-weight:600;line-height:1.35}
+  .uphint-sub{display:block;margin-top:5px;font-size:11px;color:var(--faint);font-weight:500;font-style:italic}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -388,6 +400,23 @@ function lastPerf(exId){
   }
   return null;
 }
+function lastEntry(exId){            // most recent record incl. skipped
+  for(const s of DATA.sessions){
+    const e = s.exercises.find(x=>x.id===exId);
+    if(e) return {...e, date:s.date};
+  }
+  return null;
+}
+function est1RM(w,reps){ return w*(1+reps/30); }                 // Epley
+function repsAt(orm,w){ return Math.round(30*(orm/w-1)); }
+function suggestWeights(ex, perf){
+  const orm = est1RM(perf.weight, ex.max);
+  const ideal = Math.round((orm/(1+ex.min/30))*2)/2;            // weight to land ~min reps
+  const cands = [2,4,6].map(d=>({d, w:perf.weight+d, reps:Math.max(1, repsAt(orm, perf.weight+d))}))
+                       .filter(c=>c.reps>=ex.min-2 && c.reps<=ex.max);   // drop unrealistically brutal jumps
+  let best=null; cands.forEach(c=>{ if(!best || Math.abs(c.reps-ex.min)<Math.abs(best.reps-ex.min)) best=c; });
+  return {ideal, cands, best};
+}
 function readyToProgress(ex, perf){
   if(!ex.w || !perf || ex.max==null) return false;
   return perf.reps.length>=ex.sets && perf.reps.every(r=>r>=ex.max);
@@ -498,6 +527,7 @@ function renderHome(){
   if(DATA.sessions.length){
     const last=DATA.sessions[0];
     for(const e of last.exercises){
+      if(e.skipped || !e.total) continue;
       const prev=DATA.sessions.slice(1).find(s=>s.exercises.some(x=>x.id===e.id&&x.total>0));
       const pe=prev&&prev.exercises.find(x=>x.id===e.id);
       if(pe){
@@ -507,8 +537,9 @@ function renderHome(){
     }
     if(!victory){
       for(const e of last.exercises){
+        if(e.skipped || !e.reps || !e.reps.length) continue;
         const def=findEx(e.id);
-        if(def&&def.w&&def.max!=null&&e.reps.every(r=>r>=def.max)){victory={name:e.name,kind:'warn'};break;}
+        if(def&&def.w&&def.max!=null&&e.reps.length>=def.sets&&e.reps.every(r=>r>=def.max)){victory={name:e.name,kind:'warn'};break;}
       }
     }
   }
@@ -608,7 +639,18 @@ function renderSession(type){
     const info=e.target.closest('.info');
     if(info){ const p=document.getElementById('tips_'+info.dataset.tip); if(p) p.hidden=!p.hidden; return; }
     const go=e.target.closest('.restgo');
-    if(go){ const v=parseInt(document.getElementById('rest_'+go.dataset.rest).value)||DEFAULT_REST; startTimer(v); }
+    if(go){ const v=parseInt(document.getElementById('rest_'+go.dataset.rest).value)||DEFAULT_REST; startTimer(v); return; }
+    const sk=e.target.closest('.skip');
+    if(sk){
+      const id=sk.dataset.skip;
+      const card=document.querySelector('.ex[data-ex="'+id+'"]');
+      const on=card.classList.toggle('skipped');
+      card.dataset.skipped = on?'1':'';
+      document.getElementById('body_'+id).hidden=on;
+      document.getElementById('skipnote_'+id).hidden=!on;
+      sk.textContent = on?'Annuler':'Pas fait';
+      sk.classList.toggle('on',on);
+    }
   });
   document.getElementById('back').onclick=renderHome;
   document.getElementById('saveBtn').onclick=()=>saveSession(type,prog);
@@ -628,8 +670,11 @@ function exCard(ex){
   }else{
     lastHtml=`<div class="last"><span class="none">Pas encore d'historique — pose ta première référence.</span></div>`;
   }
-  const up = readyToProgress(ex,perf)
-    ? `<div class="uphint">🎯 Tu as validé le max partout. Monte le poids et repars vers ${ex.min} reps.</div>`:'';
+  const up = buildUpHint(ex, perf);
+
+  const last = lastEntry(ex.id);
+  const reminder = (last && last.skipped)
+    ? `<div class="reminder">⏭️ Pas fait la dernière fois (${fmtDate(last.date)}) — fais-le aujourd'hui 💪</div>` : '';
 
   const wt = ex.w
     ? `<div class="wt"><label>Poids</label><input id="w_${ex.id}" inputmode="decimal" type="number" step="0.5" value="${perf?perf.weight:''}" placeholder="${perf?perf.weight:'kg'}"><span class="unit">kg</span></div>`
@@ -646,21 +691,39 @@ function exCard(ex){
   return `<div class="ex" data-ex="${ex.id}">
     <div class="top">
       <h3>${ex.name} <button class="info" data-tip="${ex.id}" aria-label="conseils technique">i</button></h3>
-      <div class="tag">${tag}</div>
+      <button class="skip" data-skip="${ex.id}">Pas fait</button>
     </div>
+    <div class="tag2">${tag}</div>
     <ul class="tips" id="tips_${ex.id}" hidden>${tips}</ul>
-    ${lastHtml}${up}${wt}
-    <div class="sets">${boxes}</div>
-    <div class="tot"><div class="l">Total reps</div>
-      <div class="v"><span class="n" id="tot_${ex.id}">0</span><span class="d" id="d_${ex.id}"></span></div></div>
-    <div class="rest">
-      <label>Récup</label>
-      <input id="rest_${ex.id}" inputmode="numeric" type="number" step="5" value="${restVal}">
-      <span class="unit">sec</span>
-      <button class="restgo" data-rest="${ex.id}">▶ chrono</button>
+    ${reminder}${lastHtml}${up}
+    <div class="exbody" id="body_${ex.id}">
+      ${wt}
+      <div class="sets">${boxes}</div>
+      <div class="tot"><div class="l">Total reps</div>
+        <div class="v"><span class="n" id="tot_${ex.id}">0</span><span class="d" id="d_${ex.id}"></span></div></div>
+      <div class="rest">
+        <label>Récup</label>
+        <input id="rest_${ex.id}" inputmode="numeric" type="number" step="5" value="${restVal}">
+        <span class="unit">sec</span>
+        <button class="restgo" data-rest="${ex.id}">▶ chrono</button>
+      </div>
+      <textarea id="note_${ex.id}" class="note" rows="2" placeholder="Note du jour : ressenti, technique, douleur…"></textarea>
     </div>
-    <textarea id="note_${ex.id}" class="note" rows="2" placeholder="Note du jour : ressenti, technique, douleur…"></textarea>
+    <div class="skipnote" id="skipnote_${ex.id}" hidden>Exercice marqué « pas fait » — il ne comptera pas dans tes stats.</div>
   </div>`;
+}
+function buildUpHint(ex, perf){
+  if(!readyToProgress(ex,perf)) return '';
+  if(ex.w && perf){
+    const s=suggestWeights(ex,perf);
+    const list = s.cands.length
+      ? s.cands.map(c=>`+${c.d} kg → ~${c.reps} reps${c===s.best?' ★':''}`).join(' · ')
+      : 'monte par petits paliers (1–2 kg) et vois ce que ça donne.';
+    return `<div class="uphint">🎯 Max atteint (${ex.max} partout) — monte le poids.
+      Pour repartir vers ~${ex.min} reps, vise ≈ <b>${s.ideal} kg</b>.<br>${list}
+      <span class="uphint-sub">★ = retombe le plus près de ${ex.min}. Estimations, ajuste au ressenti.</span></div>`;
+  }
+  return `<div class="uphint">🎯 Tu as validé le max partout — vise plus de reps ou une variante plus dure.</div>`;
 }
 function wireCard(ex){
   const perf=lastPerf(ex.id);
@@ -688,6 +751,11 @@ function wireCard(ex){
 async function saveSession(type,prog){
   const exData=[];
   for(const ex of prog.ex){
+    const card=document.querySelector('.ex[data-ex="'+ex.id+'"]');
+    if(card && card.dataset.skipped==='1'){
+      exData.push({id:ex.id,name:ex.name,skipped:true,weight:0,reps:[],total:0,note:''});
+      continue;
+    }
     const reps=[];
     for(let i=0;i<ex.sets;i++){
       const v=parseInt(document.getElementById(`r_${ex.id}_${i}`).value);
@@ -695,21 +763,23 @@ async function saveSession(type,prog){
     }
     const total=reps.reduce((a,b)=>a+b,0);
     const note=(document.getElementById('note_'+ex.id).value||'').trim();
-    if(total===0 && !note) continue; // skip untouched exercises
+    if(total===0 && !note) continue; // untouched & not marked → ignore
     const weight = ex.w ? (parseFloat(document.getElementById('w_'+ex.id).value)||0) : 0;
     const rest = parseInt(document.getElementById('rest_'+ex.id).value)||0;
     exData.push({id:ex.id,name:ex.name,weight,reps,total,rest,note});
   }
   if(!exData.length){ toast('Rien à enregistrer','warn'); return; }
 
-  // compute headline before saving
+  // compute headline before saving (ignore skipped / empty)
   let head=null;
   for(const e of exData){
+    if(e.skipped || !e.total) continue;
     const p=lastPerf(e.id);
     if(p){const diff=e.total-p.total; if(diff>0){head={msg:`${e.name} +${diff} rep${diff>1?'s':''} · VICTOIRE`,kind:'gain'};break;}}
   }
   if(!head){
     for(const e of exData){
+      if(e.skipped || !e.reps.length) continue;
       const def=findEx(e.id);
       if(def&&def.w&&def.max!=null&&e.reps.length>=def.sets&&e.reps.every(r=>r>=def.max)){
         head={msg:`${e.name} : monte le poids !`,kind:'warn'};break;}
